@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    HTML page I created for my WebAssembly module.
+
+    <script>
+      const memory = new WebAssembly.Memory({initial: 256, maximum: 256});
+      const importObject = {    
+        env:  {
+			'abortStackOverflow': () => { throw new Error('overflow'); },
+			'table': new WebAssembly.Table({initial: 0, maximum: 0, element: 'anyfunc'}),
+			'tableBase': 0,
+			'__table_base': 0,
+			'memory': memory,
+			'memoryBase': 1024,
+			'__memory_base': 1024,
+			'STACKTOP': 0,
+			'STACK_MAX': memory.buffer.byteLength,
+		}
+      };
+
+      WebAssembly.instantiateStreaming(fetch("side_module.wasm"), importObject).then(result => {
+        const value = result.instance.exports.Increment(17);
+        console.log(value.toString());
+      });
+    </script>
+  </body>
+</html>

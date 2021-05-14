@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    按`F12`查看是否支持`WebAssembly.instantiateStreaming`函数。
+    <script>
+      if (typeof WebAssembly.instantiateStreaming === "function") {
+        console.log("可以使用`WebAssembly.instantiateStreaming`函数");
+      } else {
+        console.log("`WebAssembly.instantiateStreaming`函数不可用，使用`WebAssembly.instantiate`代替");
+      }
+    </script>
+  </body>
+</html>
